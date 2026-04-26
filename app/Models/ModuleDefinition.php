@@ -15,4 +15,9 @@ class ModuleDefinition extends Model
     protected $casts = [
         'schema_json' => 'array'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'reference';
+    }
 }

@@ -12,7 +12,3 @@ Route::post('/module', [ModuleDefinition::class, 'store']);
 Route::delete("/module/{module}", [ModuleDefinition::class, 'delete']);
 Route::put("/module/{module}", [ModuleDefinition::class, 'update']);
 Route::get('/modules', [ModuleDefinition::class, 'index']);
-
-route::get("/teste", function (Request $request) {
-    dd($request->all());
-});

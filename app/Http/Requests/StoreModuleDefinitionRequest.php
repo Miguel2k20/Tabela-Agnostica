@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreModuleDefinitionRequest extends FormRequest
 {
@@ -26,11 +27,17 @@ class StoreModuleDefinitionRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'reference' => 'required|string|max:255|unique:module_definitions,reference',
+            'reference' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('module_definitions', 'reference')
+                    ->ignore($this->route('module'))
+            ],
             'schema_json' => 'required|array|min:1',
             'schema_json.*' => "required|array:{$fields}",
             // Regras para cada campo dentro de cada item
-            'schema_json.*.type' => 'required|string|in:string,int,boolean,float,text',
+            'schema_json.*.type' => 'required|string|in:string,int,boolean,float,text,date,enum',
             'schema_json.*.unique' => 'required|boolean|in:0,1',
             'schema_json.*.required' => 'required|boolean|in:0,1',
             'schema_json.*.mask' => 'nullable|string',
