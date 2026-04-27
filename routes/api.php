@@ -15,3 +15,6 @@ Route::put("/module/{module}", [ModuleDefinition::class, 'update']);
 Route::get('/modules', [ModuleDefinition::class, 'index']);
 
 Route::post('/dynamic-record/{module}', [DynamicRecord::class, 'store']);
+Route::get('/dynamic-records/{module}', [DynamicRecord::class, 'index']);
+Route::get('/dynamic-record/{dynamicRecord}', [DynamicRecord::class, 'show']);
+Route::delete('/dynamic-record/{dynamicRecord}', [DynamicRecord::class, 'delete']);

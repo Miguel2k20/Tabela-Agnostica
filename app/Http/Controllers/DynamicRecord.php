@@ -85,4 +85,54 @@ class DynamicRecord extends Controller
             ], 400);
         }
     }
+    public function index(ModuleDefinition $module) 
+    {
+        if (!$module) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Parâmetro "reference" é obrigatório.',
+            ], 400);
+        }
+
+        $records = ModelsDynamicRecord::where('reference', $module->reference)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $records
+        ], 200);
+    }
+
+    public function show(ModelsDynamicRecord $dynamicRecord)
+    {
+
+        if(!$dynamicRecord) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Registro não encontrado.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $dynamicRecord
+        ], 200);
+    }
+
+
+    public function delete(ModelsDynamicRecord $dynamicRecord)
+    {
+        if (!$dynamicRecord) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Registro não encontrado.',
+            ], 404);
+        }
+
+        $dynamicRecord->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registro deletado com sucesso.',
+        ], 200);
+    }
 }
